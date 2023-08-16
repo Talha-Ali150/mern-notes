@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
 import CustomBtn from "../CustomBtn/index";
@@ -7,6 +7,7 @@ import axios from "axios";
 import CustomSpinner from "../Spinner";
 
 function Login() {
+  const navigate = useNavigate();
   const [values, setValues] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -24,6 +25,7 @@ function Login() {
       );
       localStorage.setItem("userData", JSON.stringify(data));
       console.log("success");
+      navigate("/notes");
       setLoading(false);
       setError(false);
     } catch (e) {

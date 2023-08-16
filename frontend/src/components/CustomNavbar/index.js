@@ -5,9 +5,14 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { useNavigate } from "react-router-dom";
+import LogoutModal from "../LogoutModal";
 
 function CustomNavbar() {
   const navigate = useNavigate();
+
+  const logoutFunc = () => {
+    console.log("hello");
+  };
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>
@@ -25,7 +30,10 @@ function CustomNavbar() {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            <Nav.Link href="#action1">Home</Nav.Link>
+            <Nav.Link onClick={logoutFunc}>Home</Nav.Link>
+            <Nav.Link>
+              <LogoutModal />
+            </Nav.Link>
             <Nav.Link href="#action2">Link</Nav.Link>
             <NavDropdown title="Link" id="navbarScrollingDropdown">
               <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
