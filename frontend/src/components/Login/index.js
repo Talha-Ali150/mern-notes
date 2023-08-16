@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
 import CustomBtn from "../CustomBtn/index";
 import axios from "axios";
+import CustomSpinner from "../Spinner";
 
 function Login() {
   const [values, setValues] = useState({ email: "", password: "" });
@@ -34,7 +35,7 @@ function Login() {
   return (
     <div className="container" style={{ width: "50%" }}>
       <h1 className="text-center my-3">LOGIN</h1>
-      {loading && <h1>Loading</h1>}
+      {loading && <CustomSpinner />}
       {error && <Alert variant="danger">{error}</Alert>}
       <Form>
         <Form.Group className="mb-3">
