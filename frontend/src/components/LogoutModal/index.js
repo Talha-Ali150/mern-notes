@@ -1,31 +1,23 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import { useDispatch, useSelector } from "react-redux";
+import { userLogout } from "../../features/userLoginSlice";
 import { useNavigate } from "react-router-dom";
 
 function LogoutModal() {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
-
+  const userData = useSelector((state) => state.userLogin.userInfo);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
-  const [userData, setUserData] = useState("");
-
-  useEffect(() => {
-    try {
-      setUserData(JSON.parse(localStorage.getItem("userData")));
-    } catch (e) {
-      setUserData("");
-    }
-  }, []);
+  const navigate = useNavigate();
 
   const modalFunc = (e) => {
     if (e.target.innerText === "Yes") {
-      localStorage.removeItem("userData");
-      navigate("/");
+      dispatch(userLogout());
       setShow(false);
-      setUserData("");
+      navigate("/");
     } else {
       setShow(false);
     }
@@ -34,7 +26,7 @@ function LogoutModal() {
   return (
     <>
       {userData && (
-        <p variant="light" onClick={handleShow}>
+        <p className="my-0  text-dark" variant="light" onClick={handleShow}>
           Logout
         </p>
       )}

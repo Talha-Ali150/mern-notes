@@ -1,20 +1,32 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
 import CustomBtn from "../CustomBtn/index";
 import axios from "axios";
 import CustomSpinner from "../Spinner";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  userLoginFailure,
+  userLoginRequest,
+  userLoginResponse,
+} from "../../features/userLoginSlice";
 
 function Login() {
-  const navigate = useNavigate();
+  const loading = useSelector((state) => state.userLogin.loading);
+  const error = useSelector((state) => state.userLogin.error);
+
+  const dispatch = useDispatch();
+
+  // const navigate = useNavigate();
   const [values, setValues] = useState({ email: "", password: "" });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  // const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
+    dispatch(userLoginRequest());
     const { email, password } = values;
-    setLoading(true);
+    // setLoading(true);
     try {
       const { data } = await axios.post(
         "http://localhost:5000/api/users/login",
@@ -25,12 +37,14 @@ function Login() {
       );
       localStorage.setItem("userData", JSON.stringify(data));
       console.log("success");
-      navigate("/notes");
-      setLoading(false);
-      setError(false);
+      // navigate("/notes");
+      // setLoading(false);
+      // setError(false);
+      dispatch(userLoginResponse({ email, password }));
     } catch (e) {
-      setLoading(false);
-      setError("invalid username or password");
+      // setLoading(false);
+      // setError("invalid username or password");
+      dispatch(userLoginFailure("Invalid username or password"));
       console.log(e);
     }
   };

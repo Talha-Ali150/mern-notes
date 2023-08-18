@@ -1,8 +1,10 @@
 import React from "react";
 import CustomBtn from "../CustomBtn";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function Landing() {
+  const userData = useSelector((state) => state.userLogin.userInfo);
   const navigate = useNavigate();
   return (
     <div>
@@ -10,7 +12,9 @@ export default function Landing() {
         <h1 className="text-center">My Notes App</h1>
       </div>
       <div className="container d-flex justify-content-center">
-        <CustomBtn func={() => navigate("/login")} text="Log In" />
+        {!userData && (
+          <CustomBtn func={() => navigate("/login")} text="Log In" />
+        )}
         <CustomBtn func={() => navigate("/signup")} text="Sign Up" />
       </div>
     </div>
