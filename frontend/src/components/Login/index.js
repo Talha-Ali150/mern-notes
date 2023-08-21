@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
 import CustomBtn from "../CustomBtn/index";
@@ -18,7 +18,7 @@ function Login() {
 
   const dispatch = useDispatch();
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [values, setValues] = useState({ email: "", password: "" });
   // const [loading, setLoading] = useState(false);
   // const [error, setError] = useState(false);
