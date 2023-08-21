@@ -37,10 +37,16 @@ function Login() {
       );
       localStorage.setItem("userData", JSON.stringify(data));
       console.log("success");
-      // navigate("/notes");
+      navigate("/notes");
       // setLoading(false);
       // setError(false);
-      dispatch(userLoginResponse({ email, password }));
+      dispatch(
+        userLoginResponse({
+          email: email,
+          name: data.name,
+          token: data.token,
+        })
+      );
     } catch (e) {
       // setLoading(false);
       // setError("invalid username or password");

@@ -60,6 +60,39 @@
 
 // export default NotesList;
 
+// import React, { useEffect } from "react";
+// import { useDispatch, useSelector } from "react-redux";
+// import { fetchAllNotes } from "../../features/noteSlice";
+
+// function NotesList() {
+//   const dispatch = useDispatch();
+//   const notes = useSelector((state) => state.userNote.notes);
+//   const status = useSelector((state) => state.userNote.status);
+//   const userInfo = useSelector((state) => state.userLogin.userInfo); // Adjust this selector
+
+//   console.log(userInfo);
+
+//   useEffect(() => {
+//     if (userInfo) {
+//       dispatch(fetchAllNotes(userInfo.token));
+//     }
+//   }, [dispatch, userInfo]);
+
+//   if (status === "loading") {
+//     return <div>Loading...</div>;
+//   }
+
+//   if (status === "failed") {
+//     return <div>Error: Unable to fetch notes.</div>;
+//   }
+
+//   return (
+//     <ul>{notes && notes.map((note) => <li key={note.id}>{note.title}</li>)}</ul>
+//   );
+// }
+
+// export default NotesList;
+
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllNotes } from "../../features/noteSlice";
@@ -68,7 +101,7 @@ function NotesList() {
   const dispatch = useDispatch();
   const notes = useSelector((state) => state.userNote.notes);
   const status = useSelector((state) => state.userNote.status);
-  const userInfo = useSelector((state) => state.userNote.userInfo); // Adjust this selector
+  const userInfo = useSelector((state) => state.userLogin.userInfo); // Adjust this selector
 
   useEffect(() => {
     if (userInfo.token) {

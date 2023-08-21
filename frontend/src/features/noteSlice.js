@@ -76,20 +76,73 @@
 
 // export default notesSlice.reducer;
 
+// import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+// import axios from "axios";
+
+// // Async thunk for fetching all notes
+// export const fetchAllNotes = createAsyncThunk(
+//   "notes/fetchAllNotes",
+//   async (userInfo) => {
+//     try {
+//       const config = {
+//         headers: {
+//           Authorization: `Bearer ${userInfo}`,
+//         },
+//       }; // Adjust the URL as needed
+//       const response = await axios.get("http://localhost:5000/notes", config);
+//       return response.data;
+//     } catch (error) {
+//       throw error;
+//     }
+//   }
+// );
+
+// // Define the initial state
+// const initialState = {
+//   notes: [],
+//   status: "idle",
+//   error: null,
+// };
+
+// // Create a slice
+// const notesSlice = createSlice({
+//   name: "notes",
+//   initialState,
+//   reducers: {},
+//   extraReducers: (builder) => {
+//     builder
+//       .addCase(fetchAllNotes.pending, (state) => {
+//         state.status = "loading";
+//       })
+//       .addCase(fetchAllNotes.fulfilled, (state, action) => {
+//         state.status = "succeeded";
+//         state.notes = action.payload;
+//       })
+//       .addCase(fetchAllNotes.rejected, (state, action) => {
+//         state.status = "failed";
+//         state.error = action.error.message;
+//       });
+//   },
+// });
+
+// export default notesSlice.reducer;
+
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// Async thunk for fetching all notes
 export const fetchAllNotes = createAsyncThunk(
   "notes/fetchAllNotes",
   async (userInfo) => {
     try {
       const config = {
         headers: {
-          Authorization: `Bearer ${userInfo.token}`,
+          Authorization: `Bearer ${userInfo}`,
         },
-      }; // Adjust the URL as needed
-      const response = await axios.get("http://localhost:5000/notes", config);
+      };
+      const response = await axios.get(
+        "http://localhost:5000/api/notes",
+        config
+      );
       return response.data;
     } catch (error) {
       throw error;
@@ -97,14 +150,12 @@ export const fetchAllNotes = createAsyncThunk(
   }
 );
 
-// Define the initial state
 const initialState = {
   notes: [],
   status: "idle",
   error: null,
 };
 
-// Create a slice
 const notesSlice = createSlice({
   name: "notes",
   initialState,
