@@ -4,6 +4,7 @@ import Login from "./components/Login";
 import Landing from "./components/Landing";
 import Notes from "./components/Notes";
 import CustomNavbar from "./components/CustomNavbar";
+import AddNote from "./components/AddNote";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/notes" element={<Notes />} />
+        <Route path="/createNote" element={<AddNote />} />
       </Routes>
     </div>
   );
