@@ -20,13 +20,10 @@ function Login() {
 
   const navigate = useNavigate();
   const [values, setValues] = useState({ email: "", password: "" });
-  // const [loading, setLoading] = useState(false);
-  // const [error, setError] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(userLoginRequest());
     const { email, password } = values;
-    // setLoading(true);
     try {
       const { data } = await axios.post(
         "http://localhost:5000/api/users/login",
@@ -35,11 +32,8 @@ function Login() {
           password,
         }
       );
-      localStorage.setItem("userData", JSON.stringify(data));
       console.log("success");
       navigate("/notes");
-      // setLoading(false);
-      // setError(false);
       dispatch(
         userLoginResponse({
           email: email,
@@ -48,8 +42,6 @@ function Login() {
         })
       );
     } catch (e) {
-      // setLoading(false);
-      // setError("invalid username or password");
       dispatch(userLoginFailure("Invalid username or password"));
       console.log(e);
     }

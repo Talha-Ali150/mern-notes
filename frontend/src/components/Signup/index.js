@@ -34,7 +34,6 @@ function Signup() {
           password,
           pic,
         });
-        localStorage.setItem("userData", JSON.stringify(data));
         console.log("success");
         console.log("this is data", data);
         setError(false);

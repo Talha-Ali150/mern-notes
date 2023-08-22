@@ -5,6 +5,7 @@ import Landing from "./components/Landing";
 import Notes from "./components/Notes";
 import CustomNavbar from "./components/CustomNavbar";
 import AddNote from "./components/AddNote";
+import EditNote from "./components/EditNote";
 
 function App() {
   return (
