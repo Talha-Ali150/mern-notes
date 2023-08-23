@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import CustomBtn from "../CustomBtn";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addNote,
-  resetAddStatus,
-  resetEditStatus,
-} from "../../features/NotesSlice";
+import { addNote, resetAddStatus } from "../../features/NotesSlice";
 import Alert from "react-bootstrap/Alert";
 
 function AddNote() {

@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import CustomBtn from "../CustomBtn";
 import Alert from "react-bootstrap/Alert";
 
-function NotesList() {
+function NotesList({ search }) {
   const dispatch = useDispatch();
   const notes = useSelector((state) => state.notes.notes);
   const status = useSelector((state) => state.notes.fetchStatus);
@@ -63,17 +63,23 @@ function NotesList() {
           <div className="container">
             {notes &&
               deleteStatus !== "succeeded" &&
-              notes.map((item) => (
-                <NoteCard
-                  key={item._id}
-                  editFunc={() => navigate(`/notes/${item._id}`)}
-                  deleteFunc={() => {
-                    handleDelete(`${item._id}`);
-                  }}
-                  title={item.title}
-                  content={item.content}
-                />
-              ))}
+              notes
+                .filter((filteredNote) =>
+                  filteredNote.title
+                    .toLowerCase()
+                    .includes(search.toLowerCase())
+                )
+                .map((item) => (
+                  <NoteCard
+                    key={item._id}
+                    editFunc={() => navigate(`/notes/${item._id}`)}
+                    deleteFunc={() => {
+                      handleDelete(`${item._id}`);
+                    }}
+                    title={item.title}
+                    content={item.content}
+                  />
+                ))}
             <CustomBtn
               text="create new note"
               func={() => navigate("/createNote")}

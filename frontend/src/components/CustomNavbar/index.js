@@ -1,12 +1,12 @@
-import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { useNavigate } from "react-router-dom";
 import LogoutModal from "../LogoutModal";
+import CustomBtn from "../CustomBtn";
 
-function CustomNavbar() {
+function CustomNavbar({ setSearch }) {
   const navigate = useNavigate();
 
   return (
@@ -36,8 +36,11 @@ function CustomNavbar() {
               placeholder="Search"
               className="me-2"
               aria-label="Search"
+              onChange={(e) => setSearch(e.target.value)}
             />
-            <Button variant="outline-success">Search</Button>
+            <Nav.Link>
+              <CustomBtn text="Profile" />
+            </Nav.Link>
           </Form>
         </Navbar.Collapse>
       </Container>
