@@ -39,7 +39,7 @@ function CustomNavbar({ setSearch }) {
               onChange={(e) => setSearch(e.target.value)}
             />
             <Nav.Link>
-              <CustomBtn text="Profile" />
+              <CustomBtn text="Profile" func={() => navigate("/profile")} />
             </Nav.Link>
           </Form>
         </Navbar.Collapse>

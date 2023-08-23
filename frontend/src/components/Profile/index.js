@@ -5,7 +5,7 @@ import CustomBtn from "../CustomBtn/index";
 import axios from "axios";
 import CustomSpinner from "../Spinner";
 
-function Signup() {
+function Profile() {
   const [values, setValues] = useState({
     name: "",
     email: "",
@@ -74,68 +74,73 @@ function Signup() {
   };
 
   return (
-    <div className="container" style={{ width: "50%" }}>
-      <h1 className="text-center my-3">SIGNUP</h1>
+    <div className="container">
+      {/* <h1 className="text-center my-3">SIGNUP</h1> */}
       {loading && <CustomSpinner />}
       {error && <Alert variant="danger">{error}</Alert>}
-      <Form>
-        <Form.Group className="mb-3">
-          <Form.Label>User Name</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter Name"
-            value={values.name}
-            onChange={(event) =>
-              setValues({ ...values, name: event.target.value })
-            }
-          />
-        </Form.Group>
+      <div className="container d-flex">
+        <Form>
+          <Form.Group className="mb-3">
+            <Form.Label>User Name</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter Name"
+              value={values.name}
+              onChange={(event) =>
+                setValues({ ...values, name: event.target.value })
+              }
+            />
+          </Form.Group>
 
-        <Form.Group className="mb-3">
-          <Form.Label>User Email</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Enter Email"
-            value={values.email}
-            onChange={(event) =>
-              setValues({ ...values, email: event.target.value })
-            }
-          />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Enter Password"
-            value={values.password}
-            onChange={(event) =>
-              setValues({ ...values, password: event.target.value })
-            }
-          />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Confirm Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Enter Password"
-            value={values.confirmPassword}
-            onChange={(event) =>
-              setValues({ ...values, confirmPassword: event.target.value })
-            }
-          />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Profile Picture</Form.Label>
-          <Form.Control
-            type="file"
-            placeholder="Upload Profile Picture"
-            onChange={(event) => uploadImage(event.target.files[0])}
-          />
-        </Form.Group>
-        <CustomBtn func={handleSubmit} text="Sign Up" />
-      </Form>
+          <Form.Group className="mb-3">
+            <Form.Label>User Email</Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="Enter Email"
+              value={values.email}
+              onChange={(event) =>
+                setValues({ ...values, email: event.target.value })
+              }
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Enter Password"
+              value={values.password}
+              onChange={(event) =>
+                setValues({ ...values, password: event.target.value })
+              }
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Confirm Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Enter Password"
+              value={values.confirmPassword}
+              onChange={(event) =>
+                setValues({ ...values, confirmPassword: event.target.value })
+              }
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Profile Picture</Form.Label>
+            <Form.Control
+              type="file"
+              placeholder="Upload Profile Picture"
+              onChange={(event) => uploadImage(event.target.files[0])}
+            />
+          </Form.Group>
+          <CustomBtn func={handleSubmit} text="Sign Up" />
+        </Form>
+        <div
+          style={{ height: "200px", width: "200px", backgroundColor: "red" }}
+        ></div>
+      </div>
     </div>
   );
 }
 
-export default Signup;
+export default Profile;
