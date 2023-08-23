@@ -26,7 +26,7 @@ function Login() {
     const { email, password } = values;
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/users/login",
+        "https://mern-notes-ten.vercel.app/api/users/login",
         {
           email,
           password,

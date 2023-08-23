@@ -25,12 +25,15 @@ function Signup() {
       setError("");
       setLoading(true);
       try {
-        const { data } = await axios.post("http://localhost:5000/api/users", {
-          name,
-          email,
-          password,
-          pic,
-        });
+        const { data } = await axios.post(
+          "https://mern-notes-ten.vercel.app/api/users",
+          {
+            name,
+            email,
+            password,
+            pic,
+          }
+        );
         console.log("success");
         console.log("this is data", data);
         setError(false);

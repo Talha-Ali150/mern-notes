@@ -28,7 +28,7 @@ export default function UpdateNote() {
         };
 
         const { data } = await axios.get(
-          `http://localhost:5000/api/notes/${id}`,
+          `https://mern-notes-ten.vercel.app/api/notes/${id}`,
           config
         );
         setValues((prevValues) => ({
@@ -52,7 +52,7 @@ export default function UpdateNote() {
         },
       };
       const response = await axios.put(
-        `http://localhost:5000/api/notes/${id}`,
+        `https://mern-notes-ten.vercel.app/api/notes/${id}`,
         { title: values.title, content: values.content },
         config
       );

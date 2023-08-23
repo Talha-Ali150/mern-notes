@@ -11,7 +11,7 @@ export const fetchAllNotes = createAsyncThunk(
         },
       };
       const response = await axios.get(
-        "http://localhost:5000/api/notes",
+        "https://mern-notes-ten.vercel.app/api/notes",
         config
       );
       return response.data;
@@ -32,7 +32,7 @@ export const addNote = createAsyncThunk(
         },
       };
       const response = await axios.post(
-        "http://localhost:5000/api/notes/create",
+        "https://mern-notes-ten.vercel.app/api/notes/create",
         newNote,
         config
       );
@@ -54,7 +54,7 @@ export const editNote = createAsyncThunk(
         },
       };
       const response = await axios.put(
-        `http://localhost:5000/api/notes/${id}`,
+        `https://mern-notes-ten.vercel.app/api/notes/${id}`,
         newNote,
         config
       );
@@ -76,7 +76,7 @@ export const deleteNote = createAsyncThunk(
         },
       };
       const response = await axios.delete(
-        `http://localhost:5000/api/notes/${id}`,
+        `https://mern-notes-ten.vercel.app/api/notes/${id}`,
         config
       );
       return response.data;
