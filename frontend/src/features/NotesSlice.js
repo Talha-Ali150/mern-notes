@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const fetchAllNotes = createAsyncThunk(
@@ -86,6 +86,10 @@ export const deleteNote = createAsyncThunk(
   }
 );
 
+export const resetAddStatus = createAction("notes/resetAddStatus");
+export const resetEditStatus = createAction("notes/resetEditStatus");
+export const resetDeleteStatus = createAction("notes/resetDeleteStatus");
+
 const initialState = {
   notes: [],
   status: "idle",
@@ -115,6 +119,11 @@ const NotesSlice = createSlice({
       .addCase(addNote.fulfilled, (state, action) => {
         state.addStatus = "succeeded";
       })
+      .addCase(addNote.rejected, (state, action) => {
+        state.addStatus = "failed";
+        state.addError = action.error.message;
+      })
+
       .addCase(editNote.pending, (state, action) => {
         state.editStatus = "loading";
       })
@@ -133,7 +142,16 @@ const NotesSlice = createSlice({
       })
       .addCase(deleteNote.rejected, (state, action) => {
         state.deleteStatus = "failed";
-        state.editError = action.error.message;
+        state.deleteError = action.error.message;
+      })
+      .addCase(resetAddStatus, (state) => {
+        state.addStatus = "idle";
+      })
+      .addCase(resetEditStatus, (state) => {
+        state.editStatus = "idle";
+      })
+      .addCase(resetDeleteStatus, (state) => {
+        state.deleteStatus = "idle";
       });
   },
 });

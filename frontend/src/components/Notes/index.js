@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllNotes } from "../../features/NotesSlice";
+import { fetchAllNotes, resetDeleteStatus } from "../../features/NotesSlice";
 import { deleteNote } from "../../features/NotesSlice";
 import NoteCard from "../NoteCard/index";
 import { useNavigate } from "react-router-dom";
@@ -20,7 +20,7 @@ function NotesList() {
       if (userInfo && userInfo.token) {
         dispatch(fetchAllNotes(userInfo.token));
       }
-    }, [dispatch, userInfo, deleteStatus]);
+    }, [dispatch, userInfo]);
   } catch (e) {
     return (
       <div className="container">
@@ -40,11 +40,20 @@ function NotesList() {
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this note")) {
       dispatch(deleteNote({ userInfo: userInfo, id: id }));
+      setTimeout(() => {
+        dispatch(resetDeleteStatus());
+        dispatch(fetchAllNotes(userInfo.token));
+      }, 3000);
     }
   };
 
   return (
     <div>
+      {deleteStatus === "succeeded" && (
+        <div className="container">
+          <Alert variant="success">Note deleted Successfully</Alert>
+        </div>
+      )}
       {!userInfo ? (
         <div className="container">
           <Alert variant="danger">Please Log In to fetch Notes</Alert>
@@ -53,6 +62,7 @@ function NotesList() {
         status === "succeeded" && (
           <div className="container">
             {notes &&
+              deleteStatus !== "succeeded" &&
               notes.map((item) => (
                 <NoteCard
                   key={item._id}

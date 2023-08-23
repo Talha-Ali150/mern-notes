@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import CustomBtn from "../CustomBtn";
 import { useDispatch, useSelector } from "react-redux";
-import { addNote } from "../../features/NotesSlice";
+import {
+  addNote,
+  resetAddStatus,
+  resetEditStatus,
+} from "../../features/NotesSlice";
 import Alert from "react-bootstrap/Alert";
 
 function AddNote() {
@@ -19,6 +23,9 @@ function AddNote() {
           setError(true);
         } else {
           dispatch(addNote({ userInfo: userInfo, newNote: values }));
+          setTimeout(() => {
+            dispatch(resetAddStatus());
+          }, 3000);
           resetFields();
           setError(false);
         }
@@ -35,7 +42,11 @@ function AddNote() {
   return (
     <div className="container">
       {!userInfo && <Alert variant="danger">Please Log In to add note</Alert>}
-      {error && <Alert variant="warning">please fill both the fields</Alert>}
+      {error && (
+        <div className="container">
+          <Alert variant="warning">please fill both the fields</Alert>
+        </div>
+      )}
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="exampleFormControlInput1" className="form-label">
@@ -69,9 +80,21 @@ function AddNote() {
         {userInfo && <CustomBtn type="submit" text="Add Note" />}
       </form>
 
-      {status === "loading" && <div>Loading...</div>}
-      {status === "failed" && <div>Error: Unable to add Note.</div>}
-      {status === "succeeded" && <div>Successfully added note.</div>}
+      {status === "loading" && (
+        <div className="container">
+          <Alert variant="primary"> Loading... </Alert>
+        </div>
+      )}
+      {status === "failed" && (
+        <div className="container">
+          <Alert variant="danger"> Error: Unable to add Note. </Alert>
+        </div>
+      )}
+      {status === "succeeded" && (
+        <div className="container">
+          <Alert variant="success">Successfully added note. </Alert>
+        </div>
+      )}
     </div>
   );
 }
