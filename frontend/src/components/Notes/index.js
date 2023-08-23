@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllNotes } from "../../features/NotesSlice";
+import { deleteNote } from "../../features/NotesSlice";
 import NoteCard from "../NoteCard/index";
 import { useNavigate } from "react-router-dom";
 import CustomBtn from "../CustomBtn";
@@ -10,6 +11,7 @@ function NotesList() {
   const dispatch = useDispatch();
   const notes = useSelector((state) => state.notes.notes);
   const status = useSelector((state) => state.notes.fetchStatus);
+  const deleteStatus = useSelector((state) => state.notes.deleteStatus);
   const userInfo = useSelector((state) => state.userLogin.userInfo);
   const navigate = useNavigate();
 
@@ -18,7 +20,7 @@ function NotesList() {
       if (userInfo && userInfo.token) {
         dispatch(fetchAllNotes(userInfo.token));
       }
-    }, [dispatch, userInfo]);
+    }, [dispatch, userInfo, deleteStatus]);
   } catch (e) {
     return (
       <div className="container">
@@ -35,6 +37,12 @@ function NotesList() {
     return <Alert variant="danger">Unable to fetch notes.</Alert>;
   }
 
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete this note")) {
+      dispatch(deleteNote({ userInfo: userInfo, id: id }));
+    }
+  };
+
   return (
     <div>
       {!userInfo ? (
@@ -49,7 +57,10 @@ function NotesList() {
                 <NoteCard
                   key={item._id}
                   editFunc={() => navigate(`/notes/${item._id}`)}
-                  category={item.category}
+                  deleteFunc={() => {
+                    handleDelete(`${item._id}`);
+                  }}
+                  title={item.title}
                   content={item.content}
                 />
               ))}

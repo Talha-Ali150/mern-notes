@@ -43,6 +43,49 @@ export const addNote = createAsyncThunk(
   }
 );
 
+export const editNote = createAsyncThunk(
+  "notes/editNote",
+  async ({ userInfo, id, newNote }) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const response = await axios.put(
+        `http://localhost:5000/api/notes/${id}`,
+        newNote,
+        config
+      );
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
+export const deleteNote = createAsyncThunk(
+  "notes/deleteNote",
+  async ({ userInfo, id }) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const response = await axios.delete(
+        `http://localhost:5000/api/notes/${id}`,
+        config
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+);
+
 const initialState = {
   notes: [],
   status: "idle",
@@ -71,11 +114,26 @@ const NotesSlice = createSlice({
       })
       .addCase(addNote.fulfilled, (state, action) => {
         state.addStatus = "succeeded";
-        state.notes.push(action.payload);
       })
-      .addCase(addNote.rejected, (state, action) => {
-        state.addStatus = "failed";
-        state.addError = action.error.message;
+      .addCase(editNote.pending, (state, action) => {
+        state.editStatus = "loading";
+      })
+      .addCase(editNote.fulfilled, (state, action) => {
+        state.editStatus = "succeeded";
+      })
+      .addCase(editNote.rejected, (state, action) => {
+        state.editStatus = "failed";
+        state.editError = action.error.message;
+      })
+      .addCase(deleteNote.pending, (state, action) => {
+        state.deleteStatus = "loading";
+      })
+      .addCase(deleteNote.fulfilled, (state, action) => {
+        state.deleteStatus = "succeeded";
+      })
+      .addCase(deleteNote.rejected, (state, action) => {
+        state.deleteStatus = "failed";
+        state.editError = action.error.message;
       });
   },
 });

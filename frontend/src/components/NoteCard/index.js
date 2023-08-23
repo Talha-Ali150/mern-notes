@@ -28,7 +28,7 @@ export default function NoteCard(props) {
     <div className="card my-3">
       <div className="card-body d-flex justify-content-between align-items-center">
         <div>
-          <h5 className="card-title">{props.category}</h5>
+          <h5 className="card-title">{props.title}</h5>
           <p className="card-text">{props.content}</p>
         </div>
         <div>

@@ -9,12 +9,22 @@ function AddNote() {
   const dispatch = useDispatch();
   const status = useSelector((state) => state.notes.addStatus);
   const userInfo = useSelector((state) => state.userLogin.userInfo);
+  const [error, setError] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (userInfo.token) {
-      dispatch(addNote({ userInfo: userInfo, newNote: values }));
-      resetFields();
+    try {
+      if (userInfo.token) {
+        if (values.content === "" || values.title === "") {
+          setError(true);
+        } else {
+          dispatch(addNote({ userInfo: userInfo, newNote: values }));
+          resetFields();
+          setError(false);
+        }
+      }
+    } catch (e) {
+      console.log("e", e.message);
     }
   };
 
@@ -25,6 +35,7 @@ function AddNote() {
   return (
     <div className="container">
       {!userInfo && <Alert variant="danger">Please Log In to add note</Alert>}
+      {error && <Alert variant="warning">please fill both the fields</Alert>}
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="exampleFormControlInput1" className="form-label">

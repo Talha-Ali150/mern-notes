@@ -57,19 +57,20 @@ const updateNote = async (req, res) => {
   }
 };
 
+//
 const deleteNote = async (req, res) => {
   try {
     const note = await Note.findById(req.params.id);
-    if (note) {
-      if (note.user.toString() !== req.user.id) {
-        res.status(403).json({ message: "You can't perform this action" });
-      } else if (note.user.toString() === req.user.id) {
-        await Note.findByIdAndDelete(req.user.id);
-        res.status(204).json({ message: "Note deleted successfully" });
-      }
-    } else {
-      res.status(404).json({ message: "note not found" });
+    if (!note) {
+      return res.status(404).json({ message: "Note not found" });
     }
+
+    if (note.user.toString() !== req.user.id) {
+      return res.status(403).json({ message: "You can't perform this action" });
+    }
+
+    await Note.findByIdAndDelete(req.params.id);
+    res.status(204).json({ message: "Note deleted successfully" });
   } catch (e) {
     console.log(e);
     res.status(500).json({ error: "An error occurred" });

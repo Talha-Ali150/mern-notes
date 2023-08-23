@@ -17,6 +17,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/notes" element={<Notes />} />
         <Route path="/createNote" element={<AddNote />} />
+        <Route path="/notes/:id" element={<EditNote />} />
       </Routes>
     </div>
   );
