@@ -19,10 +19,12 @@ function Signup() {
     e.preventDefault();
     const { name, email, password, confirmPassword, pic } = values;
 
+    if (!name || !email || !password) {
+      setError("Please fill all the fields");
+    }
     if (password !== confirmPassword) {
       setError("passwords are different");
     } else {
-      setError("");
       setLoading(true);
       try {
         const { data } = await axios.post(
@@ -38,8 +40,7 @@ function Signup() {
         console.log("this is data", data);
         setError(false);
       } catch (e) {
-        setError("eror");
-        console.log("this is error", e);
+        console.log("this is error", error);
       } finally {
         setLoading(false);
       }

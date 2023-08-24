@@ -89,6 +89,7 @@ export const deleteNote = createAsyncThunk(
 export const resetAddStatus = createAction("notes/resetAddStatus");
 export const resetEditStatus = createAction("notes/resetEditStatus");
 export const resetDeleteStatus = createAction("notes/resetDeleteStatus");
+export const resetNotes = createAction("notes/resetNotes");
 
 const initialState = {
   notes: [],
@@ -117,6 +118,7 @@ const NotesSlice = createSlice({
         state.addStatus = "loading";
       })
       .addCase(addNote.fulfilled, (state, action) => {
+        state.notes.push(action.payload);
         state.addStatus = "succeeded";
       })
       .addCase(addNote.rejected, (state, action) => {
@@ -152,6 +154,9 @@ const NotesSlice = createSlice({
       })
       .addCase(resetDeleteStatus, (state) => {
         state.deleteStatus = "idle";
+      })
+      .addCase(resetNotes, (state) => {
+        return initialState;
       });
   },
 });

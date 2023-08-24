@@ -4,6 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogout } from "../../features/userLoginSlice";
 import { useNavigate } from "react-router-dom";
+import { resetNotes } from "../../features/NotesSlice";
 
 function LogoutModal() {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ function LogoutModal() {
   const modalFunc = (e) => {
     if (e.target.innerText === "Yes") {
       dispatch(userLogout());
+      dispatch(resetNotes());
       setShow(false);
       navigate("/");
     } else {
