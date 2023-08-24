@@ -32,7 +32,6 @@ function Login() {
           password,
         }
       );
-      console.log("success");
       navigate("/notes");
       dispatch(
         userLoginResponse({
