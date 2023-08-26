@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
 import CustomBtn from "../CustomBtn/index";
 import axios from "axios";
 import CustomSpinner from "../Spinner";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
   const [values, setValues] = useState({
@@ -15,37 +16,36 @@ function Signup() {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [registered, setRegistered] = useState(false);
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { name, email, password, confirmPassword, pic } = values;
 
     if (!name || !email || !password) {
       setError("Please fill all the fields");
-    }
-    if (password !== confirmPassword) {
-      setError("passwords are different");
+    } else if (password !== confirmPassword) {
+      setError("Passwords are different");
     } else {
       setLoading(true);
       try {
-        const { data } = await axios.post(
-          "https://mern-notes-ten.vercel.app/api/users",
-          {
-            name,
-            email,
-            password,
-            pic,
-          }
-        );
-        console.log("success");
-        console.log("this is data", data);
+        await axios.post("http://localhost:5000/api/users", {
+          name,
+          email,
+          password,
+          pic,
+        });
         setError(false);
+        setRegistered(true); // Add this line to set a state for registration success
       } catch (e) {
-        console.log("this is error", error);
+        setError(e.response.data);
       } finally {
         setLoading(false);
       }
     }
   };
+
   const uploadImage = async (pic) => {
     if (!pic) {
       setError("Please select an image");
@@ -77,11 +77,18 @@ function Signup() {
     }
   };
 
+  useEffect(() => {
+    if (registered) {
+      navigate("../login");
+    }
+  }, [registered, navigate]);
+
   return (
     <div className="container" style={{ width: "50%" }}>
       <h1 className="text-center my-3">SIGNUP</h1>
       {loading && <CustomSpinner />}
       {error && <Alert variant="danger">{error}</Alert>}
+
       <Form>
         <Form.Group className="mb-3">
           <Form.Label>User Name</Form.Label>
