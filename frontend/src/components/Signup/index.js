@@ -30,7 +30,7 @@ function Signup() {
     } else {
       setLoading(true);
       try {
-        await axios.post("http://localhost:5000/api/users", {
+        await axios.post("https://mern-notes-ten.vercel.app/api/users", {
           name,
           email,
           password,

@@ -1,0 +1,34 @@
+.mainContainer {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+.customForm{
+    width: 50%;
+}
+/* .imgContainer{
+
+} */
+.customImgStyle{
+display: inline-block;
+width: 25vw;
+}
+
+@media screen and (max-width : 900px){
+    
+    .mainContainer {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .customForm {
+        width: 80%;
+    }
+
+    .customImgStyle {
+        display: inline-block;
+        width: 50vw;
+    }
+}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CustomBtn from "../CustomBtn";
 import Alert from "react-bootstrap/Alert";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { editNote } from "../../features/NotesSlice";
@@ -12,8 +12,10 @@ export default function UpdateNote() {
   const status = useSelector((state) => state.notes.editStatus);
   const [values, setValues] = useState({ title: "", content: "" });
   const [noToken, setNoToken] = useState(false);
+  const [editSuccess, setEditSuccess] = useState(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetching = async () => {
@@ -36,11 +38,14 @@ export default function UpdateNote() {
           title: data.title,
           content: data.content,
         }));
+        if (editSuccess) {
+          navigate("../notes");
+        }
       }
     };
 
     fetching();
-  }, [id, userInfo]);
+  }, [id, userInfo, editSuccess, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -62,6 +67,7 @@ export default function UpdateNote() {
         editNote({ userInfo: userInfo, id: id, newNote: { title, content } })
       );
       resetFields();
+      setEditSuccess(true);
     } catch (error) {
       console.error("Error updating note:", error.message);
     }
@@ -122,9 +128,9 @@ export default function UpdateNote() {
           {status === "failed" && (
             <Alert variant="warning">Error: Unable to edit Note.</Alert>
           )}
-          {status === "succeeded" && (
+          {/* {status === "succeeded" && (
             <Alert variant="success">Successfully edited note.</Alert>
-          )}
+          )} */}
         </div>
       )}
     </div>
