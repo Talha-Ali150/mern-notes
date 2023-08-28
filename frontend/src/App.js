@@ -7,7 +7,7 @@ import CustomNavbar from "./components/CustomNavbar";
 import AddNote from "./components/AddNote";
 import EditNote from "./components/EditNote";
 import { useState } from "react";
-//import Profile from "./components/Profile";
+import Profile from "./components/Profile";
 
 function App() {
   const [search, setSearch] = useState("");
@@ -21,7 +21,7 @@ function App() {
         <Route path="/notes" element={<Notes search={search} />} />
         <Route path="/createNote" element={<AddNote />} />
         <Route path="/notes/:id" element={<EditNote />} />
-        {/* <Route path="/profile" element={<Profile />} /> */}
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </div>
   );

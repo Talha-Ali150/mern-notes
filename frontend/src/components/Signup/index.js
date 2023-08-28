@@ -58,6 +58,7 @@ function Signup() {
       data.append("upload_preset", "mern-notes");
       data.append("cloud_name", "mern-notes");
       try {
+        setLoading(true);
         const response = await fetch(
           "https://api.cloudinary.com/v1_1/mern-notes/image/upload",
           {
@@ -66,11 +67,14 @@ function Signup() {
           }
         );
         const myData = await response.json();
+        if (myData) {
+          setLoading(false);
+        }
         const { url } = myData;
-        console.log(url);
         setValues({ ...values, pic: url });
       } catch (e) {
         console.log("Cloudinary error:", e);
+        setLoading(false);
       }
     } else {
       setError("Please select a valid image (JPEG or PNG)");

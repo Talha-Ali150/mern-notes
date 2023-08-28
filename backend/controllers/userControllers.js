@@ -56,4 +56,53 @@ const loginUser = async (req, res) => {
   }
 };
 
-module.exports = { registerUser, loginUser };
+const updateProfile = async (req, res) => {
+  const user = await User.findById(req.user._id);
+  try {
+    if (user) {
+      user.name = req.body.name || user.name;
+      user.email = req.body.email || user.email;
+      user.pic = req.body.pic || user.pic;
+      if (req.body.password) {
+        user.password = req.body.password;
+      }
+      const updatedUser = await user.save();
+      res.status(201).json({
+        _id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        pic: updatedUser.pic,
+        token: generateToken(updatedUser._id),
+      });
+    } else {
+      res.status(404).json({
+        error: "user not found",
+      });
+    }
+  } catch (e) {
+    res.json({ error: e });
+  }
+};
+// const updateProfile = async (req, res) => {
+//   const { title, content } = req.body;
+
+//   try {
+//     const note = await Note.findById(req.params.id);
+
+//     if (note) {
+//       if (note.user.toString() !== req.user.id) {
+//         res.status(403).json({ message: "You can't perform this action" });
+//       } else if (note.user.toString() === req.user.id) {
+//         note.title = title;
+//         note.content = content;
+//         const updatedNote = await note.save();
+//         res.status(200).json(updatedNote);
+//       }
+//     } else {
+//       res.status(404).json({ message: "note not found" });
+//     }
+//   } catch (error) {
+//     res.status(500).json({ error: "An error occurred" });
+//   }
+// };
+module.exports = { registerUser, loginUser, updateProfile };

@@ -1,4 +1,26 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+
+export const updateProfile = createAsyncThunk(
+  "users/profile",
+  async ({ userInfo }) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const response = await axios.post(
+        "https://mern-notes-ten.vercel.app/api/users/profile",
+        config
+      );
+      return response.data;
+    } catch (e) {
+      throw e;
+    }
+  }
+);
 
 const userLoginSlice = createSlice({
   name: "userLogin",
@@ -19,6 +41,31 @@ const userLoginSlice = createSlice({
     userLogout: (state) => {
       return {};
     },
+    // userUpdateRequest: (state) => {
+    //   state.updateLoading = true;
+    //   state.updateError = false;
+    // },
+    // userUpdateResponse: (state, action) => {
+    //   state.updateLoading = false;
+    //   state.updateUserInfo = action.payload;
+    // },
+    // userUpdateFailure: (state, action) => {
+    //   state.updateLoading = false;
+    //   state.updateError = action.payload;
+    // },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(updateProfile.pending, (state) => {
+      state.updateStatus = "loading";
+    });
+    builder.addCase(updateProfile.fulfilled, (state, action) => {
+      state.updateStatus = "succeeded";
+      state.userInfo = action.payload;
+    });
+    builder.addCase(updateProfile.rejected, (state, action) => {
+      state.updateStatus = "failed";
+      state.updateError = action.error.message;
+    });
   },
 });
 

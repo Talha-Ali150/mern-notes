@@ -38,6 +38,7 @@ function Login() {
           email: email,
           name: data.name,
           token: data.token,
+          pic: data.pic,
         })
       );
     } catch (e) {

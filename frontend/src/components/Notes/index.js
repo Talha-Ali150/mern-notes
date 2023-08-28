@@ -16,20 +16,6 @@ function NotesList({ search }) {
   const userInfo = useSelector((state) => state.userLogin.userInfo);
   const navigate = useNavigate();
 
-  // try {
-  //   useEffect(() => {
-  //     if (userInfo && userInfo.token) {
-  //       dispatch(fetchAllNotes(userInfo.token));
-  //     }
-  //   }, [dispatch, userInfo]);
-  // } catch (e) {
-  //   return (
-  //     <div className="container">
-  //       <Alert variant="danger">Please Log In to fetch notes</Alert>
-  //     </div>
-  //   );
-  // }
-
   try {
     useEffect(() => {
       if (userInfo && userInfo.token) {
