@@ -25,7 +25,17 @@ function Signup() {
 
     if (!name || !email || !password) {
       setError("Please fill all the fields");
-    } else if (password !== confirmPassword) {
+    }
+
+    const isValidEmail =
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(values.email);
+
+    if (!isValidEmail) {
+      setError("Please enter a valid email address");
+      return;
+    }
+
+    if (password !== confirmPassword) {
       setError("Passwords are different");
     } else {
       setLoading(true);

@@ -1,9 +1,31 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+// export const updateProfile = createAsyncThunk(
+//   "user/updateProfile",
+//   async ({ userInfo, }) => {
+//     try {
+//       const config = {
+//         headers: {
+//           "Content-Type": "application/json",
+//           Authorization: `Bearer ${userInfo.token}`,
+//         },
+//       };
+//       const response = await axios.post(
+//         "https://mern-notes-ten.vercel.app/api/users/profile",
+//         user,
+//         config
+//       );
+//       return response.data; // Return the response data
+//     } catch (error) {
+//       throw error; // Re-throw the error to be handled by the Redux thunk
+//     }
+//   }
+// );
+
 export const updateProfile = createAsyncThunk(
-  "users/profile",
-  async ({ userInfo }) => {
+  "user/updateProfile",
+  async ({ userInfo, updatedUser }) => {
     try {
       const config = {
         headers: {
@@ -13,11 +35,12 @@ export const updateProfile = createAsyncThunk(
       };
       const response = await axios.post(
         "https://mern-notes-ten.vercel.app/api/users/profile",
+        updatedUser,
         config
       );
-      return response.data;
-    } catch (e) {
-      throw e;
+      return response.data; // Return the response data
+    } catch (error) {
+      throw error; // Re-throw the error to be handled by the Redux thunk
     }
   }
 );

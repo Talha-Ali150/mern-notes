@@ -50,22 +50,8 @@ export default function UpdateNote() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${userInfo.token}`,
-        },
-      };
-      const response = await axios.put(
-        `https://mern-notes-ten.vercel.app/api/notes/${id}`,
-        { title: values.title, content: values.content },
-        config
-      );
-      const { data } = response;
-      const { title, content } = data;
-      dispatch(
-        editNote({ userInfo: userInfo, id: id, newNote: { title, content } })
-      );
+      const updatedNote = { title: values.title, content: values.content };
+      await dispatch(editNote({ userInfo, id, newNote: updatedNote }));
       resetFields();
       setEditSuccess(true);
     } catch (error) {
